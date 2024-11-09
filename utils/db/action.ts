@@ -101,3 +101,19 @@ export async function getRewardTransactions(userId: number) {
     return [];
   }
 }
+
+
+// mark notification as read
+export async function markNotificationAsRead(notificationId: number) {
+  try {
+    // mark notification as read
+    await db
+      .update(Notifications)
+      .set({ isRead: true })
+      .where(eq(Notifications.id, notificationId))
+      .execute();
+  } catch (error) {
+    console.error("Error marking notification as read:", error);
+    return null;
+  }
+}
