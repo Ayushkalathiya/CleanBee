@@ -102,6 +102,21 @@ export async function getRewardTransactions(userId: number) {
   }
 }
 
+//get unread notifications
+export async function getUnreadNotifications(userId: number) {
+    try {
+      return await db.select().from(Notifications).where(
+        and(
+          eq(Notifications.userId, userId),
+          eq(Notifications.isRead, false)
+        )
+      ).execute();
+    } catch (error) {
+      console.error("Error fetching unread notifications:", error);
+      return [];
+    }
+  }
+  
 
 // mark notification as read
 export async function markNotificationAsRead(notificationId: number) {
