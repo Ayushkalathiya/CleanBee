@@ -76,3 +76,45 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Mapbox Geocoder Styles */
+.geocoder {
+  width: 100%;
+}
+
+.mapboxgl-ctrl-geocoder {
+  width: 100% !important;
+  max-width: none !important;
+  box-shadow: none !important;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem !important;
+}
+
+.mapboxgl-ctrl-geocoder--input {
+  padding: 0.5rem 1rem !important;
+  height: 2.5rem !important;
+}
+
+.mapboxgl-ctrl-geocoder--icon {
+  top: 8px !important;
+}
+
+.mapboxgl-ctrl-geocoder--button {
+  top: 3px !important;
+}
+
+.mapboxgl-ctrl-geocoder--suggestion {
+  padding: 8px 16px;
+}
+
+.mapboxgl-ctrl-geocoder--suggestion:hover {
+  background-color: #f3f4f6;
+}
+
+.mapboxgl-ctrl-geocoder--suggestion-title {
+  font-weight: 500;
+}
+
+.mapboxgl-ctrl-geocoder--suggestion-address {
+  color: #6b7280;
+}
