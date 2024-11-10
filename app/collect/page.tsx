@@ -1,14 +1,15 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Trash2, MapPin, CheckCircle, Clock, ArrowRight, Camera, Upload, Loader, Calendar, Weight, Search } from 'lucide-react'
+import { Trash2, MapPin, CheckCircle, Clock, ArrowRight, Camera, Upload, Loader, Calendar, Weight, Search, Book } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from 'react-hot-toast'
 import { getWasteCollectionTasks, updateTaskStatus, saveReward, saveCollectedWaste, getUserByEmail } from '@/utils/db/action'
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import LoadingPage from '../loading'
+import { useRouter } from 'next/navigation'
 
-// Make sure to set your Gemini API key in your environment variables
+//Gemini API key 
 const geminiApiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
 
 type CollectionTask = {
@@ -24,6 +25,8 @@ type CollectionTask = {
 const ITEMS_PER_PAGE = 5
 
 export default function CollectPage() {
+  
+  // State for tasks, loading, hovered waste type, search term, current page, user, selected task, verification image, verification status, verification result, and reward
   const [tasks, setTasks] = useState<CollectionTask[]>([])
   const [loading, setLoading] = useState(true)
   const [hoveredWasteType, setHoveredWasteType] = useState<string | null>(null)
@@ -31,6 +34,10 @@ export default function CollectPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [user, setUser] = useState<{ id: number; email: string; name: string } | null>(null)
 
+  // Use router
+  const router = useRouter()
+
+  // Fetch user and tasks
   useEffect(() => {
     const fetchUserAndTasks = async () => {
       setLoading(true)
@@ -64,6 +71,7 @@ export default function CollectPage() {
     fetchUserAndTasks()
   }, [])
 
+  // State for selected task, verification image, verification status, verification result, and reward
   const [selectedTask, setSelectedTask] = useState<CollectionTask | null>(null)
   const [verificationImage, setVerificationImage] = useState<string | null>(null)
   const [verificationStatus, setVerificationStatus] = useState<'idle' | 'verifying' | 'success' | 'failure'>('idle')
@@ -74,6 +82,7 @@ export default function CollectPage() {
   } | null>(null)
   const [reward, setReward] = useState<number | null>(null)
 
+  // Handle status change
   const handleStatusChange = async (taskId: number, newStatus: CollectionTask['status']) => {
     if (!user) {
       toast.error('Please log in to collect waste.')
@@ -96,6 +105,7 @@ export default function CollectPage() {
     }
   }
 
+  // Handle image upload
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
@@ -107,10 +117,12 @@ export default function CollectPage() {
     }
   }
 
+  // Read file as base64
   const readFileAsBase64 = (dataUrl: string): string => {
     return dataUrl.split(',')[1]
   }
 
+  // Handle verify
   const handleVerify = async () => {
     if (!selectedTask || !verificationImage || !user) {
       toast.error('Missing required information for verification.')
@@ -119,6 +131,7 @@ export default function CollectPage() {
 
     setVerificationStatus('verifying')
     
+    // Verify the waste using Gemini API
     try {
       const genAI = new GoogleGenerativeAI(geminiApiKey!)
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
@@ -149,8 +162,10 @@ export default function CollectPage() {
       const result = await model.generateContent([prompt, ...imageParts])
       const response = await result.response
       const text = response.text()
+    
       
       try {
+        // Parse the JSON response
         const parsedResult = JSON.parse(text)
         setVerificationResult({
           wasteTypeMatch: parsedResult.wasteTypeMatch,
@@ -192,20 +207,37 @@ export default function CollectPage() {
     }
   }
 
+  // Filter tasks by search term and paginate
   const filteredTasks = tasks.filter(task =>
     task.location.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  // Calculate pagination
   const pageCount = Math.ceil(filteredTasks.length / ITEMS_PER_PAGE)
   const paginatedTasks = filteredTasks.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   )
+  const handleWasteGuideClick = () => {
+    router.push('/waste-guide')
+  }
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-semibold mb-6 text-gray-800">Waste Collection Tasks</h1>
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-semibold text-gray-800">Waste Collection Tasks</h1>
+        <Button 
+          onClick={handleWasteGuideClick}
+          variant="outline"
+          className="flex items-center gap-2 hover:bg-green-200 hover:text-green-700"
+        >
+          <Book className="w-4 h-4" />
+          Waste Guide
+        </Button>
+      </div>
       
+      {/* Search */}
       <div className="mb-4 flex items-center">
         <Input
           type="text"
@@ -219,13 +251,16 @@ export default function CollectPage() {
         </Button>
       </div>
 
+      {/* Tasks */}
       {loading ? (
         <LoadingPage />
       ) : (
         <>
           <div className="space-y-4">
+            {/* Paginated tasks */}
             {paginatedTasks.map(task => (
               <div key={task.id} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                {/* Task details */}
                 <div className="flex justify-between items-center mb-2">
                   <h2 className="text-lg font-medium text-gray-800 flex items-center">
                     <MapPin className="w-5 h-5 mr-2 text-gray-500" />
@@ -233,6 +268,8 @@ export default function CollectPage() {
                   </h2>
                   <StatusBadge status={task.status} />
                 </div>
+
+                {/* Waste details */}
                 <div className="grid grid-cols-3 gap-2 text-sm text-gray-600 mb-3">
                   <div className="flex items-center relative">
                     <Trash2 className="w-4 h-4 mr-2 text-gray-500" />
@@ -258,7 +295,10 @@ export default function CollectPage() {
                     {task.date}
                   </div>
                 </div>
+                
+                {/* Actions */}
                 <div className="flex justify-end">
+                  {/* Action buttons */}
                   {task.status === 'pending' && (
                     <Button onClick={() => handleStatusChange(task.id, 'in_progress')} variant="outline" size="sm">
                       Start Collection
@@ -280,6 +320,7 @@ export default function CollectPage() {
             ))}
           </div>
 
+          {/* Pagination */}
           <div className="mt-4 flex justify-center">
             <Button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
@@ -302,8 +343,10 @@ export default function CollectPage() {
         </>
       )}
 
+      {/* Verification Task */}
       {selectedTask && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          {/* verification form */}
           <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <h3 className="text-xl font-semibold mb-4">Verify Collection</h3>
             <p className="mb-4 text-sm text-gray-600">Upload a photo of the collected waste to verify and earn your reward.</p>
@@ -369,6 +412,7 @@ export default function CollectPage() {
   )
 }
 
+// Status Badge component
 function StatusBadge({ status }: { status: CollectionTask['status'] }) {
   const statusConfig = {
     pending: { color: 'bg-yellow-100 text-yellow-800', icon: Clock },

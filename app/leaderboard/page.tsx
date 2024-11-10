@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 
+// Reward type
 type Reward = {
   id: number
   userId: number
@@ -19,6 +20,7 @@ type Reward = {
 }
 
 export default function LeaderboardPage() {
+  // State
   const [rewards, setRewards] = useState<Reward[]>([])
   const [filteredRewards, setFilteredRewards] = useState<Reward[]>([])
   const [loading, setLoading] = useState(true)
@@ -28,6 +30,7 @@ export default function LeaderboardPage() {
   const [showOnlyUser, setShowOnlyUser] = useState(false)
   const itemsPerPage = 10
 
+  // Fetch rewards and user on mount
   useEffect(() => {
     const fetchRewardsAndUser = async () => {
       setLoading(true)
@@ -58,6 +61,7 @@ export default function LeaderboardPage() {
     fetchRewardsAndUser()
   }, [])
 
+  // Filter rewards based on search term and show only user
   useEffect(() => {
     let result = rewards
     if (searchTerm) {
@@ -72,11 +76,13 @@ export default function LeaderboardPage() {
     setCurrentPage(1)
   }, [searchTerm, showOnlyUser, rewards, user])
 
+  // Pagination
   const pageCount = Math.ceil(filteredRewards.length / itemsPerPage)
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
   const currentItems = filteredRewards.slice(indexOfFirstItem, indexOfLastItem)
 
+  // Render table rows
   const renderTableRows = () => {
     return currentItems.map((reward, index) => {
       const overallIndex = indexOfFirstItem + index
@@ -119,8 +125,10 @@ export default function LeaderboardPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Leaderboard title */}
       <h1 className="text-3xl font-semibold mb-6 text-gray-800">Leaderboard</h1>
 
+      {/* Top performers card */}
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <Loader className="animate-spin h-8 w-8 text-gray-600" />

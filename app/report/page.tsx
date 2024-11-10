@@ -1,6 +1,6 @@
 "use client"
 import { useState, useCallback, useEffect } from 'react'
-import { MapPin, Upload, CheckCircle, Loader } from 'lucide-react'
+import { MapPin, Upload, CheckCircle, Loader, Book } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import mapboxgl from 'mapbox-gl'
@@ -49,6 +49,8 @@ export default function ReportPage() {
   } | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [locationName, setLocationName] = useState<string>('')
+
+
 
   // coverting coordinates to location name
   const reverseGeocode = async (lng: number, lat: number) => {
@@ -299,9 +301,25 @@ export default function ReportPage() {
     checkUser()
   }, [router])
 
+  // Handle waste guide button click
+  const handleWasteGuideClick = () => {
+    router.push('/waste-guide')
+  }
+
   return (
     <div className="p-8 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-semibold mb-6 text-gray-800">Report waste</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-semibold text-gray-800">Report waste</h1>
+        <Button 
+          onClick={handleWasteGuideClick}
+          variant="outline"
+          className="flex items-center gap-2 hover:bg-green-200 hover:text-green-700"
+        >
+          <Book className="w-4 h-4" />
+          Waste Guide
+        </Button>
+      </div>
+      
       
       {/* Form */}
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-lg mb-12">
