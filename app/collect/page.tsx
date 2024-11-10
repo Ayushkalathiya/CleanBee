@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { toast } from 'react-hot-toast'
 import { getWasteCollectionTasks, updateTaskStatus, saveReward, saveCollectedWaste, getUserByEmail } from '@/utils/db/action'
 import { GoogleGenerativeAI } from "@google/generative-ai"
+import LoadingPage from '../loading'
 
 // Make sure to set your Gemini API key in your environment variables
 const geminiApiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
@@ -219,9 +220,7 @@ export default function CollectPage() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <Loader className="animate-spin h-8 w-8 text-gray-500" />
-        </div>
+        <LoadingPage />
       ) : (
         <>
           <div className="space-y-4">

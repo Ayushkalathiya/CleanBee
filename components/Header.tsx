@@ -17,6 +17,7 @@ import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base"
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider"
 import useMediaQuery  from "../hooks/useMediaQuery"
 import { createUser, getUnreadNotifications, markNotificationAsRead, getUserByEmail, getUserBalance } from "@/utils/db/action"
+import LoadingPage from "@/app/loading"
 
 const clientId = "BJKdDFkNtkWX87XqkuWrDu4rbkSvWyQZ5lswS0ucINxxcN0inRVW8zzKAywPPzgiOHP7_3PcfFwfpvcQvSdaLRs";
 
@@ -197,7 +198,7 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
   };
 
   if (loading) {
-    return <div>Loading Web3Auth...</div>;
+    return <LoadingPage />;
   }
 
   return (

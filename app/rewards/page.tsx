@@ -4,6 +4,7 @@ import { Coins, ArrowUpRight, ArrowDownRight, Gift, AlertCircle, Loader } from '
 import { Button } from '@/components/ui/button'
 import { getUserByEmail, getRewardTransactions, getAvailableRewards, redeemReward, createTransaction } from '@/utils/db/action'
 import { toast } from 'react-hot-toast'
+import LoadingPage from '../loading'
 
 type Transaction = {
   id: number
@@ -141,9 +142,9 @@ export default function RewardsPage() {
   }
 
   if (loading) {
-    return <div className="flex justify-center items-center h-64">
-      <Loader className="animate-spin h-8 w-8 text-gray-600" />
-    </div>
+    return (
+      <LoadingPage />
+    )
   }
 
   return (
