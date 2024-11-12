@@ -1,6 +1,5 @@
 'use client'
-
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Leaf } from 'lucide-react'
 import { Poppins } from 'next/font/google'
@@ -11,9 +10,98 @@ const poppins = Poppins({
   display: 'swap',
 })
 
-const wasteItems = ['🍌', '📰', '🥤', '🍾', '💻', '🛢️', '👕', '🌿']
+const wasteItems =  [
+  // Food & Organic Waste
+  "🍌", // banana peel
+  "🥝", // fruit waste
+  "🥬", // vegetable scraps
+  "🥚", // eggshells
+  "☕", // coffee grounds
+  "🍞", // bread waste
+  "🍖", // meat scraps
+  "🥗", // food leftovers
 
+  // Paper & Cardboard
+  "📰", // newspaper
+  "📦", // cardboard box
+  "📅", // paper calendar
+  "📑", // office paper
+  "📚", // old books
+  "🧻", // tissue paper
+  "📨", // envelopes
+  "📋", // paper receipts
+
+  // Plastic Waste
+  "🥤", // disposable cup
+  "🧴", // plastic bottle
+  "🛍️", // plastic bag
+  "🧃", // juice box/tetra pak
+  "🥡", // takeout container
+  "💊", // medicine packaging
+  "🧪", // plastic containers
+  "🎨", // plastic packaging
+
+  // Glass & Metal
+  "🍾", // glass bottle
+  "🥫", // canned food
+  "🍶", // glass jars
+  "🥄", // metal utensils
+  "🔩", // metal scraps
+  "💡", // light bulbs
+  "🪞", // mirrors
+  "🎨", // paint cans
+
+  // Electronic Waste
+  "💻", // laptop
+  "📱", // mobile phone
+  "🔋", // batteries
+  "🖨️", // printer
+  "📀", // CD/DVD
+  "🎮", // gaming devices
+  "🎧", // headphones
+  "⌚", // watches/wearables
+
+  // Hazardous Waste
+  "🛢️", // oil/chemicals
+  "🧪", // laboratory waste
+  "💊", // expired medications
+  "🔫", // aerosol cans
+  "🖌️", // paint
+  "🧴", // cleaning products
+  "💅", // nail polish
+  "🔦", // fluorescent tubes
+
+  // Textile & Furniture
+  "👕", // clothing
+  "👟", // shoes
+  "🧦", // socks
+  "🧣", // accessories
+  "🪑", // furniture
+  "🛏️", // mattress
+  "🧸", // toys
+  "🧶", // fabric scraps
+
+  // Garden & Outdoor
+  "🌿", // yard waste
+  "🍂", // leaves
+  "🌳", // tree branches
+  "🌺", // dead plants
+  "🪴", // plant pots
+  "🏺", // ceramic items
+  "⚱️", // broken pottery
+  "🧹", // outdoor debris
+];
 export default function LoadingPage() {
+  const [windowWidth, setWindowWidth] = useState(0)
+  const [windowHeight, setWindowHeight] = useState(0)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setWindowWidth(window.innerWidth)
+      setWindowHeight(window.innerHeight)
+    }
+  }, [])
+
   return (
     <div className={`${poppins.className} h-screen w-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 overflow-hidden`}>
       <motion.div
@@ -83,9 +171,13 @@ export default function LoadingPage() {
           <motion.div
             key={index}
             className="absolute text-4xl"
-            initial={{ y: -50, x: Math.random() * window.innerWidth }}
+            initial={{
+              y: -50,
+              x: Math.random() * windowWidth,
+            }}
             animate={{
-              y: window.innerHeight + 50,
+              y: windowHeight + 50,
+              x: Math.random() * windowWidth,
               rotate: Math.random() * 360,
             }}
             transition={{

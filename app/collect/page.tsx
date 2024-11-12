@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { Trash2, MapPin, CheckCircle, Clock, ArrowRight, Camera, Upload, Loader, Calendar, Weight, Search, Book } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -81,12 +81,14 @@ export default function CollectPage() {
     confidence: number;
   } | null>(null)
   const [reward, setReward] = useState<number | null>(null)
+  // const router = useRouter();
+
 
   // Handle status change
   const handleStatusChange = async (taskId: number, newStatus: CollectionTask['status']) => {
     if (!user) {
       toast.error('Please log in to collect waste.')
-      return
+      return router.push('/login')
     }
 
     try {
@@ -221,6 +223,11 @@ export default function CollectPage() {
   const handleWasteGuideClick = () => {
     router.push('/waste-guide')
   }
+  
+  // if user is not logged in, redirect to login page
+  if(!user){
+    return(router.push('/login'))
+  }
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
@@ -253,7 +260,10 @@ export default function CollectPage() {
 
       {/* Tasks */}
       {loading ? (
-        <LoadingPage />
+        <div>
+          <Loader className="animate-spin -ml-1 mr-3 h-5 w-5" />
+          <span className="text-gray-600">Loading tasks...</span>
+        </div>
       ) : (
         <>
           <div className="space-y-4">

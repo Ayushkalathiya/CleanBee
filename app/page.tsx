@@ -158,7 +158,7 @@ function FallingWaste() {
             transition={{
               duration: Math.random() * 5 + 5,
               repeat: Infinity,
-              delay: Math.random() * 40,
+              delay: Math.random() * 50,
             }}
             className="absolute text-3xl sm:text-4xl"
           >

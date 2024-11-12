@@ -164,7 +164,7 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
     };
   }, [userInfo]);
 
-  const login = async () => {
+const login = async () => {
     if (!web3auth) {
       console.log("web3auth not initialized yet");
       return;
@@ -327,7 +327,7 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
               onClick={login}
               className="bg-green-600 hover:bg-green-700 text-white text-sm md:text-base"
             >
-              Login
+              Login              
               <LogIn className="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5" />
             </Button>
           ) : (
