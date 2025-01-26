@@ -173,23 +173,6 @@ We welcome contributions! Please follow these steps:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-See our [Contributing Guidelines](CONTRIBUTING.md) for more details.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- [Next.js](https://nextjs.org/) for the amazing framework
-- [shadcn/ui](https://ui.shadcn.com/) for beautiful components
-- [Web3Auth](https://web3auth.io/) for secure authentication
-- [NeonDB](https://neon.tech/) for serverless Postgres
-- [Gemini AI](https://gemini.google.com) for waste classification
-- [Mapbox](https://www.mapbox.com) for mapping services
 
 
 
----
-
-<p align="center">Made with 💚 for a cleaner planet</p>
