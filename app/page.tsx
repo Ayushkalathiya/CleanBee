@@ -124,18 +124,21 @@ function FallingWaste() {
         {wasteItems.map((item, index) => (
           <motion.div
           key={index}
-          initial={{ y: -50, x: typeof window !== "undefined" ? Math.random() * window.innerWidth : 0 }}
-          animate={{ y: typeof window !== "undefined" ? window.innerHeight + 50 : 0 }}
+          initial={{ 
+            y: -50, 
+            x: Math.random() * 1000 // Use a fixed large width instead of window.innerWidth
+          }}
+          animate={{ y: 1000 }} // Use a fixed large height instead of window.innerHeight
           exit={{ opacity: 0 }}
           transition={{
-            duration: Math.random() * 2 + 1,
+            duration: Math.random() * 5 + 5,
             repeat: Infinity,
-            ease: "easeInOut",
+            delay: Math.random() * 50,
           }}
+          className="absolute text-3xl sm:text-4xl"
         >
           {item}
-        </motion.div>  
-        
+        </motion.div>
         ))}
       </AnimatePresence>
     </div>
