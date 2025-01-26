@@ -1,15 +1,15 @@
 "use client"
-import { useState, useCallback, useEffect } from 'react'
-import { MapPin, Upload, CheckCircle, Loader, Book } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { createReport, createUser, getRecentReports, getUserByEmail } from '@/utils/db/action'
 import { GoogleGenerativeAI } from "@google/generative-ai"
-import mapboxgl from 'mapbox-gl'
-import 'mapbox-gl/dist/mapbox-gl.css'
-import { createUser, getUserByEmail, createReport, getRecentReports } from '@/utils/db/action'
-import { useRouter } from 'next/navigation'
-import { toast } from 'react-hot-toast'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import { Book, CheckCircle, Loader, MapPin, Upload } from 'lucide-react'
+import mapboxgl from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 // Environment variables
 const geminiApiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
@@ -22,7 +22,7 @@ export default function ReportPage() {
   // State
   const [user, setUser] = useState<{ id: number; email: string; name: string } | null>(null)
   const router = useRouter()
-  const [map, setMap] = useState<mapboxgl.Map | null>(null)
+  const [, setMap] = useState<mapboxgl.Map | null>(null)
 
   const [reports, setReports] = useState<Array<{
     id: number
@@ -87,7 +87,7 @@ export default function ReportPage() {
     // Add geocoder to map
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxToken!,
-      mapboxgl: mapboxgl,
+      mapboxgl: mapboxgl as unknown as typeof import('mapbox-gl'),
       marker: false,
     })
 
@@ -201,6 +201,9 @@ export default function ReportPage() {
       const response = await result.response
       const text = response.text()
       
+      console.log(text);
+      
+
       try {
         const parsedResult = JSON.parse(text)
         if (parsedResult.wasteType && parsedResult.quantity && parsedResult.confidence) {
@@ -216,7 +219,7 @@ export default function ReportPage() {
           setVerificationStatus('failure')
         }
       } catch (error) {
-        console.error('Failed to parse JSON response:', text)
+        console.error('Failed to parse JSON response:', error)
         setVerificationStatus('failure')
       }
     } catch (error) {
@@ -246,8 +249,12 @@ export default function ReportPage() {
         newReport.amount,
         preview || undefined,
         verificationResult ? JSON.stringify(verificationResult) : undefined
-      ) as any
+      ) ;
       
+      if (!report) {
+        throw new Error('Failed to create report');
+      }
+
       const formattedReport = {
         id: report.id,
         location: report.location,
