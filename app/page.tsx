@@ -1,38 +1,37 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { AnimatedGlobe } from "@/components/AnimatedGlobe";
 import {
-  ArrowRight,
-  Leaf,
-  Recycle,
-  Users,
-  Coins,
-  MapPin,
-  Trash2,
-  LucideIcon,
-  Battery,
-  Info,
-} from "lucide-react";
+  CommunityHighlights,
+  HowItWorks,
+  UpcomingEvents,
+} from "@/components/Dashboard";
 import { Button } from "@/components/ui/button";
-import { Poppins } from "next/font/google";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import {
-  getRecentReports,
   getAllRewards,
+  getRecentReports,
   getWasteCollectionTasks,
 } from "@/utils/db/action";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowRight,
+  Coins,
+  Leaf,
+  LucideIcon,
+  MapPin,
+  Recycle,
+  Users,
+} from "lucide-react";
+import { Poppins } from "next/font/google";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import WasteItemsList from "@/components/WasteItemsList";
+import { useEffect, useState } from "react";
 
 const poppins = Poppins({
   weight: ["300", "400", "600"],
   subsets: ["latin"],
   display: "swap",
 });
-
 
 const wasteItems = [
   // Food & Organic Waste
@@ -116,34 +115,7 @@ const wasteItems = [
   "🧹", // outdoor debris
 ];
 
-export function AnimatedGlobe() {
-  return (
-    <div className="relative w-24 h-24 sm:w-40 sm:h-40 mx-auto mb-6 sm:mb-8">
-      {/* Scaled-down globe on smaller screens */}
-      <motion.div
-        className="absolute inset-0 rounded-full bg-green-500 opacity-20"
-        animate={{ scale: [1, 1.1, 1] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      />
-      <motion.div
-        className="absolute inset-2 rounded-full bg-green-400 opacity-40"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-      />
-      <motion.div
-        className="absolute inset-4 rounded-full bg-green-300 opacity-60"
-        animate={{ scale: [1, 0.9, 1] }}
-        transition={{ duration: 3, repeat: Infinity }}
-      />
-      <motion.div
-        className="absolute inset-6 rounded-full bg-green-200 opacity-80"
-        animate={{ y: [0, -5, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      />
-      <Leaf className="absolute inset-0 m-auto h-12 w-12 sm:h-20 sm:w-20 text-green-600" />
-    </div>
-  );
-}
+
 
 function FallingWaste() {
   return (
@@ -273,7 +245,6 @@ export default function Home() {
           )}
         </motion.div>
       </section>
-
       <motion.section
         className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-10 mb-12 sm:mb-20"
         initial={{ opacity: 0, y: 50 }}
@@ -296,7 +267,6 @@ export default function Home() {
           description="Be part of a growing community committed to sustainable practices."
         />
       </motion.section>
-
       <motion.section
         className="bg-white p-6 sm:p-10 rounded-3xl shadow-lg mb-12 sm:mb-20 relative overflow-hidden"
         initial={{ opacity: 0, y: 50 }}
@@ -330,7 +300,11 @@ export default function Home() {
         </div>
       </motion.section>
 
-      
+      {/* Dashboard section */}
+
+      <CommunityHighlights />
+      <HowItWorks />
+      <UpcomingEvents />
       <motion.section
         className="text-center"
         initial={{ opacity: 0, y: 50 }}

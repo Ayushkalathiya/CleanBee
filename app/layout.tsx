@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Inter } from "next/font/google";
-import "./globals.css";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import { Inter } from "next/font/google";
+import { useEffect, useState } from "react";
+import "./globals.css";
 // import 'leaflet/dist/leaflet.css'
-import { Toaster } from "react-hot-toast";
 import { getAvailableRewards, getUserByEmail } from "@/utils/db/action";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,9 +30,10 @@ export default function RootLayout({
           if (user) {
             const availableRewards = (await getAvailableRewards(
               user.id
-            )) as any;
+            )) ;
             console.log("availableRewards from layout", availableRewards);
-            setTotalEarnings(availableRewards);
+            const total = availableRewards.reduce((sum, reward) => sum + reward.cost, 0);
+            setTotalEarnings(total);
           }
         }
       } catch (error) {

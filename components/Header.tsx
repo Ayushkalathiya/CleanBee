@@ -1,39 +1,47 @@
-// @ts-nocheck
 "use client";
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+
+import LoadingPage from "@/app/loading";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Menu,
-  Coins,
-  Leaf,
-  Search,
-  Bell,
-  User,
-  ChevronDown,
-  LogIn,
-  LogOut,
-} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
-import { Web3Auth } from "@web3auth/modal";
-import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
-import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
-import useMediaQuery from "../hooks/useMediaQuery";
 import {
   createUser,
   getUnreadNotifications,
-  markNotificationAsRead,
-  getUserByEmail,
   getUserBalance,
+  getUserByEmail,
+  markNotificationAsRead,
 } from "@/utils/db/action";
-import LoadingPage from "@/app/loading";
+import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
+import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
+import { Web3Auth } from "@web3auth/modal";
+import {
+  Bell,
+  ChevronDown,
+  Coins,
+  Leaf,
+  LogIn,
+  Menu,
+  Search,
+  User
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import useMediaQuery from "../hooks/useMediaQuery";
+
+interface CustomNotification {
+  id: number;
+  createdAt: Date;
+  userId: number;
+  message: string;
+  type: string;
+  isRead: boolean;
+}
 
 const clientId =
   "BJKdDFkNtkWX87XqkuWrDu4rbkSvWyQZ5lswS0ucINxxcN0inRVW8zzKAywPPzgiOHP7_3PcfFwfpvcQvSdaLRs";
@@ -69,16 +77,21 @@ const navItems = [
   { href: "/report", label: "Report Waste" },
   { href: "/collect", label: "Collect Waste" },
   { href: "/rewards", label: "Rewards" },
-  { href: "/leaderboard", label: "Leaderboard" },
 ];
 
-export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
-  const [provider, setProvider] = useState<IProvider | null>(null);
+export default function Header({ onMenuClick }: HeaderProps) {
+  const [, setProvider] = useState<IProvider | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState<any>(null);
+  interface AuthUserInfo {
+    email: string;
+    name: string;
+    // Add other properties as needed
+  }
+  
+  const [userInfo, setUserInfo] = useState<Partial<AuthUserInfo> | null>(null);
   const pathname = usePathname();
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<CustomNotification[]>([]);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [balance, setBalance] = useState(0);
 

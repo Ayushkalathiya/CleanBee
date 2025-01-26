@@ -6,7 +6,8 @@ import { Poppins } from 'next/font/google'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Home, RefreshCcw, AlertTriangle, Send } from 'lucide-react'
-import { AnimatedGlobe } from './page'
+import { AnimatedGlobe } from '@/components/AnimatedGlobe'
+
 
 const poppins = Poppins({ 
   weight: ['300', '400', '600'],
@@ -46,7 +47,7 @@ export default function Error({
         >
           <AlertTriangle className="mx-auto h-16 w-16 text-red-500 mb-4" />
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h1>
-          <p className="text-xl text-gray-600">Don't worry, even the best recycling systems have hiccups sometimes!</p>
+          <p className="text-xl text-gray-600">Don&apos;t worry, even the best recycling systems have hiccups sometimes!</p>
         </motion.div>
         
         <motion.div 
@@ -98,7 +99,7 @@ export default function Error({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                Thank you for reporting the issue. We'll look into it!
+                Thank you for reporting the issue. We\&apos;ll look into it!
               </motion.p>
             )}
           </AnimatePresence>

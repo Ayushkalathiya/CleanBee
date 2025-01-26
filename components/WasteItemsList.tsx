@@ -144,7 +144,7 @@ export default function WasteClassification() {
   const filteredCategories = useMemo(() => {
     return Object.entries(categories)
       .filter(([key]) => selectedCategories.has(key))
-      .filter(([_, category]) => {
+      .filter(([, category]) => {
         const searchLower = searchQuery.toLowerCase()
         return (
           category.title.toLowerCase().includes(searchLower) ||

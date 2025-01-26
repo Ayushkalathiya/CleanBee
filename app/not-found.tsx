@@ -1,12 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
+import { Home, Recycle, Trash2 } from 'lucide-react'
 import { Poppins } from 'next/font/google'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Home, Trash2, Recycle } from 'lucide-react'
-import { AnimatedGlobe } from './page'
+import { useState } from 'react'
+import  { AnimatedGlobe }  from '@/components/AnimatedGlobe'
 
 const poppins = Poppins({ 
   weight: ['300', '400', '600'],
@@ -37,7 +37,7 @@ export default function NotFound() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Oops! It seems this page has been recycled. Let's find you a greener path!
+          Oops! It seems this page has been recycled. Let&apos;s find you a greener path!
         </motion.p>
         <motion.div 
           className="flex flex-wrap justify-center gap-4 my-8"
@@ -78,7 +78,7 @@ export default function NotFound() {
             </Button>
           </Link>
           <p className="text-sm text-gray-500 mt-4">
-            Remember, every piece of waste has a proper place. Let's keep our digital space clean too!
+            Remember, every piece of waste has a proper place. Let&apos;s keep our digital space clean too!
           </p>
         </motion.div>
       </div>

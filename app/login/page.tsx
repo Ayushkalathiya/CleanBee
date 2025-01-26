@@ -1,19 +1,23 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { Web3Auth } from '@web3auth/modal'
-import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from '@web3auth/base'
-import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider'
+import LoadingPage from '@/app/loading'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import LoadingPage from '@/app/loading'
 import { createUser } from '@/utils/db/action'
-import { useRouter } from 'next/navigation'
+import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from '@web3auth/base'
+import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider'
+import { Web3Auth } from '@web3auth/modal'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowRight, Coins, Leaf, Loader2, LucideIcon, Shield, Users } from 'lucide-react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Leaf, Coins, Users, LucideIcon, Shield, ArrowRight, Loader2 } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+interface AuthUserInfo {
+  email?: string
+  name?: string
+}
 
 // Web3Auth Configuration
 const clientId = 'BJKdDFkNtkWX87XqkuWrDu4rbkSvWyQZ5lswS0ucINxxcN0inRVW8zzKAywPPzgiOHP7_3PcfFwfpvcQvSdaLRs'
@@ -103,11 +107,11 @@ function LoadingSpinner() {
 }
 
 export default function LoginPage() {
-  const [provider, setProvider] = useState<IProvider | null>(null)
+  const [, setProvider] = useState<IProvider | null>(null)
   const [loggedIn, setLoggedIn] = useState(false)
   const [loading, setLoading] = useState(true)
   const [isLoggingIn, setIsLoggingIn] = useState(false)
-  const [userInfo, setUserInfo] = useState<any>(null)
+  const [userInfo, setUserInfo] = useState<Partial<AuthUserInfo> | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   const router = useRouter()

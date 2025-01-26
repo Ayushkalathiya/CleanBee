@@ -55,7 +55,7 @@ const wasteCategories = {
   };
   
   export default function WasteGuide() {
-    const [selectedCategory, setSelectedCategory] = useState("recyclable");
+    const [, setSelectedCategory] = useState("recyclable");
   
     return (
       <Card className="w-full mb-12">

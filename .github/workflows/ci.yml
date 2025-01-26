@@ -1,0 +1,42 @@
+name: CI/CD for Next.js
+
+on:
+  push:
+    branches:
+      - main  # Runs on pushes to the main branch
+  pull_request:
+    branches:
+      - main  # Runs for PRs targeting the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up Node.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18  # Use the Node.js version your project requires
+        cache: 'yarn'
+
+    # Install dependencies
+    - name: Install dependencies
+      run: yarn install
+
+    # Lint the code
+    - name: Lint code
+      run: yarn lint
+
+    # Run tests
+    - name: Run tests
+      run: yarn test
+
+    # Build the Next.js project
+    - name: Build Next.js
+      run: yarn build
+

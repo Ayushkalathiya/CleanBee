@@ -1,13 +1,12 @@
 'use client'
-import { useState, useEffect, use } from 'react'
-import { Trash2, MapPin, CheckCircle, Clock, ArrowRight, Camera, Upload, Loader, Calendar, Weight, Search, Book } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { toast } from 'react-hot-toast'
-import { getWasteCollectionTasks, updateTaskStatus, saveReward, saveCollectedWaste, getUserByEmail } from '@/utils/db/action'
+import { getUserByEmail, getWasteCollectionTasks, saveCollectedWaste, saveReward, updateTaskStatus } from '@/utils/db/action'
 import { GoogleGenerativeAI } from "@google/generative-ai"
-import LoadingPage from '../loading'
+import { Book, Calendar, CheckCircle, Clock, Loader, MapPin, Search, Trash2, Upload, Weight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 //Gemini API key 
 const geminiApiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
@@ -80,7 +79,7 @@ export default function CollectPage() {
     quantityMatch: boolean;
     confidence: number;
   } | null>(null)
-  const [reward, setReward] = useState<number | null>(null)
+  const [,setReward] = useState<number | null>(null)
   // const router = useRouter();
 
 

@@ -1,8 +1,8 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { Coins, ArrowUpRight, ArrowDownRight, Gift, AlertCircle, Loader } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { getUserByEmail, getRewardTransactions, getAvailableRewards, redeemReward, createTransaction } from '@/utils/db/action'
+import { createTransaction, getAvailableRewards, getRewardTransactions, getUserByEmail, redeemReward } from '@/utils/db/action'
+import { AlertCircle, ArrowDownRight, ArrowUpRight, Coins, Gift } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import LoadingPage from '../loading'
 
