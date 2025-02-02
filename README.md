@@ -1,79 +1,39 @@
-# CleanBee 🐝 - Community-Driven Waste Management Platform
+# CleanBee - Community-Driven Waste Management Platform
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.0-blue)](https://tailwindcss.com/)
-[![Web3Auth](https://img.shields.io/badge/Web3Auth-Latest-purple)](https://web3auth.io/)
+[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)   [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.0-blue)](https://tailwindcss.com/) [![Web3Auth](https://img.shields.io/badge/Web3Auth-Latest-purple)](https://web3auth.io/)
 
-CleanBee is a modern web3-enabled waste management platform that transforms community cleanup into an engaging, gamified experience. Powered by Next.js and AI technology, CleanBee makes environmental stewardship accessible and rewarding for everyone.
+CleanBee is a web3-enabled platform that gamifies community-driven waste management. Powered by Next.js and AI technology, CleanBee simplifies environmental cleanup and rewards participants.
 
-![CleanBee Banner](banner-placeholder.png)
 
 ## 🌟 Key Features
 
 ### For Community Members
-- **Smart Waste Reporting** 📸
-  - Upload waste images with geolocation
-  - AI-powered waste classification using Gemini AI
-  - Real-time verification system
-  - Points awarded based on waste type and quantity
-
-- **Interactive Cleanup Management** 🗺️
-  - Browse nearby waste reports on an interactive Mapbox interface
-  - Claim cleanup responsibilities
-  - Upload before/after photos for verification
-  - Earn bonus points for successful cleanups
-
-- **Web3 Integration** 🌐
-  - Secure authentication via Web3Auth
-  - Transparent point tracking
-  - Future NFT rewards system
-  - Cross-platform wallet support
+- **Smart Waste Reporting** 📸: Upload waste images, receive AI-powered classification, and earn points.
+- **Cleanup Management** 🗺️: Browse, claim, and verify cleanups, earning points for successful tasks.
+- **Web3 Integration** 🌐: Secure login, transparent point tracking, and future NFT rewards.
 
 ### For Administrators
-- **Dashboard Analytics** 📊
-  - Real-time community engagement metrics
-  - Cleanup progress monitoring
-  - Environmental impact reports
-  - Waste hotspot identification
+- **Dashboard Analytics** 📊: Track community engagement, cleanup progress, and environmental impact.
 
 ## 🛠️ Technology Stack
 
 ### Frontend
-- **Next.js 14+**
-  - App Router
-  - Server Components
-  - API Routes
-- **UI/Styling**
-  - Tailwind CSS
-  - shadcn/ui components
-  - Lucide Icons
-- **Authentication**
-  - Web3Auth
-  - Next-Auth.js
+- **Next.js 14+**, **Tailwind CSS**, **shadcn/ui components**, **Web3Auth**, **Next-Auth.js**
 
 ### Backend & Database
-- **Database**
-  - NeonDB (PostgreSQL)
-  - Prisma ORM
-- **APIs**
-  - Gemini AI API (Waste Classification)
-  - Mapbox API (Geolocation)
-  - Web3Auth API
-  - Cloudinary (Image Management)
+- **NeonDB (PostgreSQL)**, **Prisma ORM**
+- **Gemini AI** (Waste Classification), **Mapbox API**, **Cloudinary** (Image Management)
 
 ### DevOps & Tooling
-- TypeScript
-- ESLint
-- Prettier
-- Husky for Git hooks
+- **TypeScript**, **ESLint**, **Prettier**, **Husky** for Git hooks
 
 ## 📦 Installation
 
 1. **Clone the Repository**
 ```bash
-git clone https://github.com/yourusername/cleanbee.git
-cd cleanbee
+git clone https://github.com/yourusername/cleanup.git
+cd cleanup
+
 ```
 
 2. **Install Dependencies**
@@ -145,34 +105,3 @@ yarn dev
 4. Complete cleanup
 5. Upload verification photo
 6. Earn bonus points
-
-## 🚀 Roadmap
-
-### Q2 2024
-- [ ] NFT rewards system
-- [ ] Advanced AI waste classification
-- [ ] Community chat features
-
-### Q3 2024
-- [ ] Mobile responsive optimization
-- [ ] DAO governance implementation
-- [ ] Automated reward distribution
-
-### Q4 2024
-- [ ] Multi-chain support
-- [ ] Carbon footprint calculator
-- [ ] Multi-language support
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-
-
